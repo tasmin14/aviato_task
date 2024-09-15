@@ -1,6 +1,7 @@
 import React from 'react'
-import { Image, Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
+import { Image, Text, View, StyleSheet, FlatList, TouchableOpacity, StatusBar } from 'react-native'
 import { moderateScale, scale, verticalScale } from '../../utils/Scaling';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const data = [
   {
@@ -94,9 +95,9 @@ const data = [
 ]
 const Item = ({ item, navigation }) => (
 
-  <TouchableOpacity
+  < TouchableOpacity
     onPress={() => navigation.navigate('Category', { item: item })}
-    style={styles.cardContainer}>
+    style={styles.cardContainer} >
     <View style={styles.topRow}>
 
       <Image source={item.image} style={styles.image} />
@@ -134,16 +135,19 @@ const Item = ({ item, navigation }) => (
       <Text style={styles.label}>SALES</Text>
       <Text style={styles.value}>${item.sales}</Text>
     </View>
-  </TouchableOpacity>
+  </TouchableOpacity >
 );
 
 export default function App({ navigation }) {
   return (
-    <FlatList
-      data={data}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <Item item={item} navigation={navigation} />}
-    />
+    <SafeAreaView>
+      <StatusBar barStyle="dark-content" />
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <Item item={item} navigation={navigation} />}
+      />
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
